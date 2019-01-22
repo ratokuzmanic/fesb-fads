@@ -1,0 +1,36 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{lipsum}
+\usepackage{pgf-umlsd}
+\usepackage[simplified]{pgf-umlcd}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{acro}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\author{Rato Kuzmanić, 250}
+\title{Double Compression Of JPEG Image Using DWT Over RDWT}
+\date{FESB, siječanj 2019.}
+\makeatletter
+
+\begin{document}
+
+    \input{chapters/title-page.tex}
+
+    \tableofcontents
+    \thispagestyle{empty}
+    \newpage
+    
+    \setcounter{page}{1}
+
+    \input{chapters/introduction.tex} \newpage
+    \input{chapters/definitions.tex} \newpage
+
+    \addcontentsline{toc}{section}{\listfigurename}
+    \listoffigures
+
+    \addcontentsline{toc}{section}{Abbreviations}
+    \acsetup{only-used=false}
+    \printacronyms[include-classes=abbrev,name=Abbreviations]
+\end{document}
