@@ -15,34 +15,46 @@ za $u = 0, ..., N - 1$ i $v = 0, ..., N - 1$,\\
 gdje je $N = 8$ i $C(k) = \frac{1}{\sqrt{2}}$ za $k = 0$, a 1 inače.
 
     \subsection{Implementacija}
+Implementacija DCT transformacije u JavaScript jeziku je dana kako slijedi:
 \begin{lstlisting}
-import numpy as np
-    
-def incmatrix(genl1,genl2):
-    m = len(genl1)
-    n = len(genl2)
-    M = None #to become the incidence matrix
-    VT = np.zeros((n*m,1), int)  #dummy variable
-    
-    #compute the bitwise xor matrix
-    M1 = bitxormatrix(genl1)
-    M2 = np.triu(bitxormatrix(genl2),1) 
-    
-    for i in range(m-1):
-        for j in range(i+1, m):
-            [r,c] = np.where(M2 == M1[i,j])
-            for k in range(len(r)):
-                VT[(i)*n + r[k]] = 1;
-                VT[(i)*n + c[k]] = 1;
-                VT[(j)*n + r[k]] = 1;
-                VT[(j)*n + c[k]] = 1;
-    
-                if M is None:
-                    M = np.copy(VT)
-                else:
-                    M = np.concatenate((M, VT), 1)
-    
-                VT = np.zeros((n*m,1), int)
-    
-    return M
+let cosMap = null;
+
+let memoizeCosines = function(N) {
+    cosMap = cosMap || {};
+    cosMap[N] = new Array(N*N);
+
+    let PI_N = Math.PI / N;
+
+    for (let k = 0; k < N; k++) {
+    for (let n = 0; n < N; n++) {
+        cosMap[N][n + (k * N)] = Math.cos(PI_N * (n + 0.5) * k);
+    }
+    }
+};
+
+function dct(signal, scale) {
+    let L = signal.length;
+    scale = scale || 2;
+
+    if (!cosMap || !cosMap[L]) memoizeCosines(L);
+
+    let coefficients = signal.map(function () {return 0;});
+
+    return coefficients.map(function (__, ix) {
+    return scale * signal.reduce(function (prev, cur, ix_, arr) {
+        return prev + (cur * cosMap[L][ix_ + (ix * L)]);
+    }, 0);
+    });
+};
+
+module.exports = dct;
 \end{lstlisting}
+
+    \subsection{Primjer}
+Primjer fotografije na koju je primjenjena DCT transformacija u sklopu JPEG kodiranja
+je dana uz originalnu sliku, respektivno, na sljedećoj slici:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.42\textwidth]{original}
+    \includegraphics[width=0.42\textwidth]{example-dct}
+\end{figure}
