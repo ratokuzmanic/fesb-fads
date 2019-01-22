@@ -1,5 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 
+\usepackage[croatian]{babel}
 \usepackage{lipsum}
 \usepackage{pgf-umlsd}
 \usepackage[simplified]{pgf-umlcd}
@@ -10,7 +11,7 @@
 \usepackage{enumitem}
 
 \author{Rato Kuzmanić, 250}
-\title{Double Compression Of JPEG Image Using DWT Over RDWT}
+\title{Obrada rada \textit{Double Compression Of JPEG Image Using DWT Over RDWT}}
 \date{FESB, siječanj 2019.}
 \makeatletter
 
@@ -25,12 +26,8 @@
     \setcounter{page}{1}
 
     \input{chapters/introduction.tex} \newpage
-    \input{chapters/definitions.tex} \newpage
-
-    \addcontentsline{toc}{section}{\listfigurename}
-    \listoffigures
-
-    \addcontentsline{toc}{section}{Abbreviations}
-    \acsetup{only-used=false}
-    \printacronyms[include-classes=abbrev,name=Abbreviations]
+    \input{chapters/theory.tex} \newpage
+    \input{chapters/dct.tex} \newpage
+    \input{chapters/dwt.tex} \newpage
+    \input{chapters/conclusion.tex} \newpage
 \end{document}
