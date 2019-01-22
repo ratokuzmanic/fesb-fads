@@ -2,13 +2,47 @@
 DCT transformacija je jedna od najčešćih transformacija koju primjenjujemo, a svoju popularnost naspram primjerice 
 diskretne Furierove transformacije duguje sljedećim razlozima:
     \begin{enumerate}
-        \item Ljudsko oko je senzitivnije na niske frekvencije nego li visoke.
-        \item DCT može smanjiti utjecaj kvadrataste segmentacije.
+        \item Ljudsko oko je senzitivnije na niske frekvencije nego li visoke, a DCT transformacija nam omogućava visoku
+        kontrolu nad niskim frekvencijama.
+        \item DCT dobro skriva utjecaj blokovne segmentacije.
     \end{enumerate}
 
 Matematički gledano, DCT transformacija se definira kako slijedi:
-F(u,v) = $\frac{2}{N}*C(u)*C(v)\sum_{x=0}^{N-1}\sum_{y=0}^{N-1}f(x,y)cos(\frac{\pi*(2x+1)*u}{2*N})cos(\frac{\pi*(2y+1)*v}{2*N})$
-za u = 0, ..., N - 1 i v = 0, ..., N - 1
-gdje N = 8 i C(k) = $\frac{1}{\sqrt{2}}$ za k = 0 i 1 inače.
+\begin{center}
+    $F(u,v) = \frac{2}{N}*C(u)*C(v)\sum_{x=0}^{N-1}\sum_{y=0}^{N-1}f(x,y)cos(\frac{\pi*(2x+1)*u}{2*N})cos(\frac{\pi*(2y+1)*v}{2*N})$
+\end{center}
+za $u = 0, ..., N - 1$ i $v = 0, ..., N - 1$,\\
+gdje je $N = 8$ i $C(k) = \frac{1}{\sqrt{2}}$ za $k = 0$, a 1 inače.
 
     \subsection{Implementacija}
+\begin{lstlisting}
+import numpy as np
+    
+def incmatrix(genl1,genl2):
+    m = len(genl1)
+    n = len(genl2)
+    M = None #to become the incidence matrix
+    VT = np.zeros((n*m,1), int)  #dummy variable
+    
+    #compute the bitwise xor matrix
+    M1 = bitxormatrix(genl1)
+    M2 = np.triu(bitxormatrix(genl2),1) 
+    
+    for i in range(m-1):
+        for j in range(i+1, m):
+            [r,c] = np.where(M2 == M1[i,j])
+            for k in range(len(r)):
+                VT[(i)*n + r[k]] = 1;
+                VT[(i)*n + c[k]] = 1;
+                VT[(j)*n + r[k]] = 1;
+                VT[(j)*n + c[k]] = 1;
+    
+                if M is None:
+                    M = np.copy(VT)
+                else:
+                    M = np.concatenate((M, VT), 1)
+    
+                VT = np.zeros((n*m,1), int)
+    
+    return M
+\end{lstlisting}

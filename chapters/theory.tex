@@ -2,11 +2,17 @@
 Pohranjivanje digitalne fotografije podrazumijeva proces pretvorbe izvorne slike u niz bitova
 (engl. \textit{bitstream}) korištenjem kodera, te potom očitavanje pretvorbom niza bitova u
 izvornu sliku korištenjem dekodera. Ukoliko je količina podataka sadržana u kodiranom obliku
-izvorne fotografije manje nego li količina podataka u izvornoj fotografiji, tada taj proces
-nazivamo kompresijom. Slijed ovog procesa je prikazan slikom BROJ SLIKE.
+izvorne fotografije manja nego li količina podataka u izvornoj fotografiji, tada taj proces
+nazivamo kompresijom. Slijed ovog procesa je prikazan slikom:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{compression}
+\end{figure}
 
-Omjer kompresije je dan izrazom: 
-$Omjer kompresije = \frac{n_{1}}{n_{2}}$
+Omjer kompresije je dan izrazom:
+\begin{center}
+    $Omjer\,kompresije = \frac{n_{1}}{n_{2}}$
+\end{center}
 gdje $n_{1}$ predstavlja količinu podataka u izvornoj fotografiji, a $n_{2}$ količinu podataka u
 nizu bitova. 
 
@@ -14,16 +20,20 @@ nizu bitova.
     U svrhe mjerenja kvalitete kompresije, poglavito koristimo dvije metode:
     \begin{enumerate}
         \item \textbf{MSE} (engl. \textit{Mean Square Error}) koji je definiran na sljedeći način:
-        $MSE = \sqrt{\frac{\sum_{x=0}^{W-1}\sum_{y=0}^{H-1}[f(x,y) - {f}'(x,y)]^{2}}{W*H}}$
+        \begin{center}
+            $MSE = \sqrt{\frac{\sum_{x=0}^{W-1}\sum_{y=0}^{H-1}[f(x,y) - {f}'(x,y)]^{2}}{W*H}}$
+        \end{center}        
         \item \textbf{PSNR} (engl. \textit{Peak Signal to Noise Ratio}) koji je definiran na sljedeći 
-        način: $PSNR = 20*log_{10}\frac{255}{MSE}$
+        način: 
+        \begin{center}
+            $PSNR = 20*log_{10}\frac{255}{MSE}$
+        \end{center}
     \end{enumerate}
     Gdje pritom f(x,y) predstavlja vrijednost piksela u izvornoj fotografiji, a {f}'(x,y) predstavlja
     vrijednost piksela dekodirane slike.
 
-    \subsection{Vrste transformacija}
-    U pogledu provođenja transformacije izvorne fotografije iz prostorne u frekvencijsku
-    domenu, najčešće koristimo neku od metoda iz jedne od sljedećih kategorija:
+    \subsection{Metode kodiranja}
+    U pogledu kodiranja izvorne fotografije najčešće koristimo neku od metoda iz jedne od sljedećih kategorija:
     \begin{enumerate}
         \item \textbf{Prediktivno kodiranje}: Jedan od primjera prediktivnog kodiranja je 
         DPCM (engl. \textit{Differential Pulse Code Modulation}), a zasniva se na kompresiji
