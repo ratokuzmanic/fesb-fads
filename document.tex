@@ -11,6 +11,7 @@
 \usepackage{enumitem}
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage[nottoc]{tocbibind}
 
 \graphicspath{ {images/} }
 \DeclareGraphicsExtensions{.jpg}
@@ -31,5 +32,17 @@
     \setcounter{page}{1}
 
     \input{chapters/introduction.tex} \newpage
-    \input{chapters/eme-architecture.tex} \newpage
+    \input{chapters/eme-architecture.tex} \newpage 
+
+    \begin{thebibliography}{9}
+        \bibitem{emeStandard} 
+        W3C (2017) 
+        \textit{Encrypted Media Extensions}, s interneta: 
+        \texttt{https://www.w3.org/TR/2017/RECencrypted-media-20170918}, zadnji pristup: 28.1.2019.
+
+        \bibitem{whatIsEme} 
+        Sivonen; Henri (2013)
+        \textit{What is EME?}, s interneta: 
+        \texttt{https://hsivonen.fi/eme}, zadnji pristup: 28.1.2019.
+    \end{thebibliography}
 \end{document}
