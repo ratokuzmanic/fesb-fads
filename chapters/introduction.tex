@@ -1,20 +1,24 @@
 \section{Uvod}
-Razvojem mrežnih, a naročito internet, tehnologija korištenje multimedijalnih sadržaja
-je u kontinuiranom porastu. Jedan od najprisutnijih oblika multimedijalnog sadržaja su
-slikovni sadržaji, odnosno digitalne fotografije.
+Porastom popularnosti OTT (engl. \texit{Over the Top}) multimedijalnih servisa poput 
+Netflixa, Hulua, HBO GO-a, Amazon Videa i drugih, nameće se pitanje tehnološke zaštite 
+intelektualnog vlasništva i prava na autorsko djelo. U širem smislu, vlasnici autorskih 
+prava žele zadržati pravo kontrole toka, upotrebe i distribucije svojih djela.
 
-Zbog sve veće upotrebe digitalne fotografije i češćih prijenosa istih putem mreža, javlja
-se potreba za kompresijom zapisa digitalni fotografija kako bi se zahtjevi za mrežu smanjili
-i omogućilo korisnicima da u što kraćem vremenu pristupe fotografijama.
+Razvoj OTT servisa je pratio razvoj DRM (engl. \textit{Digital Rights Management}) sustava
+koji osiguravaju kontrolu pristupa multimedijalnom sadržaju i temeljem kojeg se određenim
+korisnicima, odnosno konzumentima, daje isključivo pravo na korištenje medija u unaprijed
+definiranom obliku. Moderni DRM sustavi namijenjeni OTT servisima većinom koriste W3C-ov EME
+(engl.\textit{Encrypted Media Extensions}) standard koji omogućava jednostavnu integraciju 
+DRM rješenja u web preglednike klijenata bez narušavanja lanca povjerenja i uvođenja 
+tehnoloških ovisnosti i tehnološkog višaka.
 
-U centru istraživanja kompresije digitalne fotografije egzistiraju pitanja o optimalnim 
-prostorima boja, segmentaciji, metodama i algoritmima kvantizacije, kvantizacijskim tablicama,
-entropijskom kodiranju i brojna druga pitanja. 
+Prvenstvena namjena DRM sustava je zaštita povjerljivosti krajnjeg digitalnog zapisa,
+no ista ne osigurava potpunu zaštitu povjerljivosti samog sadržaja koji je podložan 
+primitivnim oblicima napada poput presnimavanja. Kako bi se omogućilo određivanja identiteta
+inicijalnog pirata samog sadržaja, u sustav zaštite se uvode i stenografske metodologije i
+tehnike skrivenog vodenog žiga, gdje se na korisniku neprimjetan način uvodi jedinstveni 
+identifikator sesije.
 
-Autori izvornog rada \textit{Double Compression Of JPEG Image Using DWT Over RDWT} nude 
-teoretski pregled metode rada kompresije, kao i pregled različitih metoda pretvorbe zapisa 
-digitalne fotografije iz prostorne u frekvencijsku domenu, uspoređujući pritom DCT 
-(engl.\textit{Discrete Cosine Transform}), DWT (engl. \textit{Discrete Wavelet Transform}) RDWT
-(\textit{Redundant Wavelet Transform}) metode transformacije.
-
-U ovom seminarskom radu ću prenijeti izlaganja autora kao i njihov značaj.
+Cilj ovog seminarskog rada je na praktičnom primjeru serije t@gged s HBO GO platforme
+provesti stegoanalizu i pokušati pronaći dokaze identificirajućih podataka pohranjenih
+u sami video zapis.

@@ -1,0 +1,103 @@
+\section{Arhitektura EME sustava}
+Na slici Slika 1. možemo vidjeti referentnu arhitekturu DRM sustava opisanog EME
+standardom. [1] Arhitektura se sastoji od sljedećih komponenti:
+\begin{enumerate}
+\item Pristupne točke krajnjem OTT servisu putem koje se dohvaća multimedijalni sadržaj,
+najčešće ostvaren putem CDN-a (engl. Content Delivery Network) kako bi se pospješila
+distribuiranost krajnjih servera i omogućila niska latencija kao i pravilno geoprostorno
+opterećenje.
+\item Preglednika kojeg krajnji korisnik upotrebljava kako bi pristupio multimedijalnom
+sadržaju na ciljanom OTT servisu putem internetske infrastrukture. Korišteni
+preglednik je predmet odabira krajnjeg korisnika, no izdavatelj licenci može ograničiti
+dozvoljene preglednike s ciljem dodatne zaštite u slučaju pronalaska propusta u
+implementaciji EME sustava u nekom od preglednika.
+\item Aplikacije koja se odnosi na softverski sustav pružen krajnjem korisniku, a omogućava
+mu dohvat potrebnih komponenti za upotrebu DRM sustava i dekripciju zaštićenog,
+najčešće kriptiranog, multimedijalnog sadržaja.
+\item Web servera koja predstavlja OTT servis u širem smislu i omogućava korisniku da
+putem sigurnog kanala autorizira svoje radnje, poglavito prikupljanjem nužnih licenci
+za upotrebu multimedijalnog sadržaja.
+\item CDM (engl. \textit{Content Decryption Module}) je softverski sustav koji može biti neovisan
+o samome pregledniku, no mora pružati mogućnost dekripcije zaštićenog
+multimedijalnog sadržaja ukoliko je isti u ispravnom formatu i pružena je
+odgovarajuća, validna licenca.
+\item Multimedijalni okvir koji upravlja komunikacijom između aplikacije i CDM sustava
+putem preglednika. Zadaća ovog okvira je na siguran način upravljati licencama kao i
+nadolazećim segmentima multimedijalnog sadržaja koje mu osigurava preglednik.
+\item Platforma koja ne mora odgovarati ugrađenoj video platformi preglednika, iako
+referentna arhitektura predlaže korištenje iste kako bi se smanjio tehnološki dug kao i
+povećala portabilnost rješenja.
+
+SLIKA
+
+\subsection{Lanac povjerenja}
+Prilikom dizajniranja arhitekture sustava, uzete su sljedeće pretpostavke o lancu povjerenja u
+obzir [2]:
+\begin{enumerate}
+\item Izdavatelj licence ne vjeruje pregledniku.
+\item Izdavatelj licence vjeruje CDM-u.
+\item Izdavatelj licence vjeruje web serveru.
+\item Izdavatelj licence vjeruje multimedijalnom okviru i platformi dokle god je ista sukladna
+EME standardu.
+
+Ovakvim lancem povjerenja, izdavatelji licence su zadržali isključivo pravo odabira platforme
+i mehanizma dekripcije, tj. CDM-a, kojeg mogu pružiti u vidu vlastitog softverskog rješenja koje
+korisnik primjerice može preuzeti u vlastiti preglednik, instalirati lokalno na računalno, imati
+integriranog s operacijskim sustavom ili pak ugrađenog u sami hardver. Uvođenjem ove restrikcije 
+povjerljivost multimedijalnog sadržaja nije narušena sve do trenutka dok CDM ne dekriptira
+sadržaj i proslijedi istog reproducirajućoj platformi.
+
+U praksi se obično integriraju na tržištu testirana rješenja za upravljanje ključevima i
+licencama, bilo da je riječ o Microsoftovom PlayReady rješenju ili Googleovom Widevine.
+Usprkos činjenici da se isti još uvijek koriste kao sastavni dio upravljanja ključeva u CDM-ovima,
+njihov tehnološki doseg i ovisnost je smanjena u vidu apstrahiranja samog procesa upravljanja
+DRM sustavom i reprodukcijom multimedijalnog sadržaja. [2]
+
+\subsection{Metodologija rada}
+Sami EME standard ne specificira razinu apstrakcije koju CDM mora implementirati, pa je
+stoga moguće da sustav nakon dekripcije:
+\begin{enumerate}
+\item  Pruži dekriptirani multimedijalni sadržaj u kodiranom obliku (npr. JPEG, H.264, MPEG4, itd.) pregledniku ili platformi;
+\item  Dekriptira multimedijalni sadržaj koji potom dekodira i pruži okvire za prikaz pregledniku
+ili platformi;
+\item  Dekriptira multimedijalni sadržaj, dekodira ga i potom pruži informacije o pikselima koje
+je potrebno iscrtati u pregledniku ili platformi;
+\item  Dekriptira multimedijalni sadržaj, dekodira ga i potom pruži informacije o pikselima koje
+je potrebno iscrtati direktno grafičkoj kartici (hardveru).
+\end{enumerate}
+Ovisno o granulaciji apstrakcije i razini kontrole pristupa dekodiranim podacima i okvirima
+definira se rigoroznost samog CDM sustava kao i vjerojatnost da izdavatelji licenca pristanu na
+korištenje istog. [2]
+Primjer korištenja DRM sustava koji se bazira na EME standardu i koristi vlastiti CDM je dan
+kako slijedi:
+\begin{enumerate}
+\item Preglednik dohvaća multimedijalni sadržaj sa pristupne točke koristeći pritom proizvoljni
+protokol za prijenos sadržaja. Sami standard ne definira nužan protokol ili svojstva
+transmisije, iako se u praksi najčešće koriste protokoli za kontinuirani prijenos
+multimedijalnog sadržaja, primjerice HLS (engl. \textit{HTTP Live Streaming}) ili MPEG-DASH
+(engl. \textit{Dynamic Adaptive Streaming over HTTP}).
+\item Kada preglednik primi kriptirani multimedijalni sadržaj, okida događaj kojim obavještava
+multimedijalni okvir koji se izvršava u kontekstu stranice da je preglednik naišao na
+multimedijalni (najčešće video) sadržaj za čije je očitanje potreban ključ. Zajedno s tim,
+preglednik također prosljeđuje inicijalizacijske podatke iz multimedijalnog sadržaja
+samome multimedijalnom okviru.
+\item  Multimedijalni okvir kreira sesiju i prosljeđuje podatke o inicijalizacijskim podacima
+CDM-u koji korištenjem svog sustava za upravljanje ključevima kreira sesijski ključ.
+Pritom ukoliko postoji više implementiranih sustava za upravljanje ključem (npr. za
+podržavanje više platformi), multimedijalni okvir može izabrati koji sustav želi koristiti.
+\item Multimedijalni okvir pokrene transmisiju okteta multimedijalnog sadržaja kodiranog u
+format koji pruži CDM i njegov odgovarajući sustav za upravljanje ključevima. Preneseni
+okviri osiguravaju povjerljivost jer niti preglednik niti multimedijalni okvir ne znaju
+dekriptirati iste.
+\item Podaci o aktivnoj sesiji se prenose iz multimedijalnog okvira u CDM koji korištenjem te
+informacije, primljenih okteta multimedijalnog sadržaja i generiranog sesijskog ključa
+kreira kriptografski dokaz o vlastitoj autentičnosti i ispravnosti. Taj dokaz se prosljeđuje
+multimedijalnom okviru.
+\item Multimedijalni okvir prenosi kriptografski dokaz, zajedno uz informacije o sesiji i
+korisniku, web serveru koji pritom konstruira poruku koja sadrži ključ potreban CDM-u da
+bi ispravno dekriptirao asocirani multimedijalni sadržaj. Web server šalje tu poruku
+multimedijalnom okviru.
+\item Multimedijalni okvir koji, kao i preglednik, ne može narušiti povjerljivost poruke koju je
+dobio od web servera istu prosljeđuje CDM-u.
+\item CDM dobivene ključeve koristi kako bi dekriptirao multimedijalni sadržaj i istog
+proslijedio pregledniku ili platformi, ovisno o implementaciji.
