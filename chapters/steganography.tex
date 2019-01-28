@@ -1,0 +1,42 @@
+\section{Steganografija}
+Iako u ovom radu promatramo steganografiju na primjeru video sadržaja, temeljni koncept je nepromijenjen u usporedbi
+sa steganografijom digitalne fotografije ili audio zapisa.
+
+\subsection{Definicija}
+Steganografija je znanost tajne komunikacije, odnosno tehnika prikrivanja informacije u omotač tako da nitko, osim
+krajnjeg namjenjenog primatelja, ne zna za samo postojanje prikrivene informacije. Uobičajeni steganografski sustav
+je dan na slici ~\ref{img:steganography}. Etimologija riječi se nalazi u Grčkim riječima \textit{steganos} (prikriveno) 
+i \textit{graphein} (pisanje), u doslovnom prijevodu \textit{prikriveno pisanje}.
+\begin{figure}[h]
+    \caption{Uobičajeni steganografski sustav}
+    \centering
+    \includegraphics[width=0.9\textwidth]{steganography.png}
+    \label{img:steganography}
+\end{figure}
+
+\subsection{Usporedba s vodenim žigom}
+Vodeni žig je sličan steganografiji, no pritom je cilj steganografije da prikrivena informacija ostane nedetektirana,
+dok vodeni žig može biti i evidentan dokle god njegovo uklanjanje uzrokuje značajnu degradaciju kvalitete datoteke. 
+Vodeni žig se često koristi kako bi se pripomoglo praćenje izvora fotografije.
+
+\subsection{Usporedba s kriptografijom}
+Glavna razlika između steganografije i kriptografije jest u tome što kriptografija kreira poruku koja nije razmumljiva,
+dok steganografija prikriva poruku tako da ne bude vidljiva. I kriptografija i steganografija imaju za cilj zaštiti
+povjerljivost informacije.
+
+\subsection{Poveznica steganografije s DRM sustavima}
+DRM sustavi primjenjuju kriptografske metode, kao što je prikazano u prethodnom poglavlju na konkretnom EME standardu,
+kako bi zaštitili povjerljivost multimedijalnog sadržaja. Iako svojim mehanizmima rada značajno povisuju ljestvicu sigurnosti,
+steganografske metodologije pružaju dodatnu razinu zaštite u pogledu mogućnosti praćenja izvora informacije.
+
+Korištenjem steganografije u DRM sustavu možemo pratiti svaku korisničku sesiju i automatski saznati koji korisnik je narušio licencom
+dana prava. \cite{newWatermark} Kao što je prikazano u prethodnom poglavlju, EME bazirani sustavi već koriste pojam \textit{sesije}, a iste
+podatke dijele i s autorizacijskim i licencnim serverom zbog čega je enkodiranje sadržaja sa ugrađenim steganografskim dokazima
+porijekla održiva opcija.
+
+\begin{figure}[h]
+    \caption{VideoMark steganografski identifikator}
+    \centering
+    \includegraphics[width=0.65\textwidth]{videomark}
+    \label{img:videomark}
+\end{figure}
