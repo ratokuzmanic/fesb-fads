@@ -45,7 +45,7 @@ Steganografija se implementira brojnim metodama rada, od kojih su najpoznatije n
     \subsubsection{Injekcija}
     Najjednostavnija metoda koja se zaniva na umetanju tajne poruke u dijelu datoteke koji će biti zanemaren
     od strane klijentskog programa. Ova metoda se može implementirati, primjerice, umetanjem skrivene poruke
-    u komentare, skrivene elemente ili nakon oznaka za kraj datoteke (EOF - engl. \textit{End of File}). Glavni
+    u komentare, skrivene elemente ili nakon oznaka za kraj datoteke (EOF -- engl. \textit{End of File}). Glavni
     nedostatak ove metode jest da povećava veličinu modificirane datoteke u usporedbi s nemodificiranom.
 
     \subsubsection{Supstitucija}
@@ -80,4 +80,8 @@ Steganografija se implementira brojnim metodama rada, od kojih su najpoznatije n
             koji na nasumičan način određuje lokacije pohrane bitova skrivene informacije unutar omotača. Preduvjet ove metode jest dijeljena tajna
             koja se koristi kao inicijalizator generatora. Ova tehnika je značajno teža za detekciju i statistički uniformnija.
         \end{itemize}
- 
+
+    \subsubsection{Transformacije}
+    Postoje i kompliciranije metode skrivanja informacije, poput modifikacije frekvencijskog područja primjenom diskretne
+    kosinusne (DCT -- engl. \textit{Discrete Cosine Transform}) ili valićne transformacije (DWT -- engl. \textit{Discrete Wavelet Transform}), no one su
+    van domene ovog rada. 
