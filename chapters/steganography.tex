@@ -39,3 +39,45 @@ porijekla održiva opcija.
     \includegraphics[width=0.65\textwidth]{videomark}
     \label{img:videomark}
 \end{figure}
+
+\subsection{Metode rada}
+Steganografija se implementira brojnim metodama rada, od kojih su najpoznatije navedene u ovom odlomku.
+    \subsubsection{Injekcija}
+    Najjednostavnija metoda koja se zaniva na umetanju tajne poruke u dijelu datoteke koji će biti zanemaren
+    od strane klijentskog programa. Ova metoda se može implementirati, primjerice, umetanjem skrivene poruke
+    u komentare, skrivene elemente ili nakon oznaka za kraj datoteke (EOF - engl. \textit{End of File}). Glavni
+    nedostatak ove metode jest da povećava veličinu modificirane datoteke u usporedbi s nemodificiranom.
+
+    \subsubsection{Supstitucija}
+    Supstitucijske metode rada se zasnivaju na identifikaciji dijela datoteke s najmanjom važnoću i zamjeni istog
+    sa skrivenom porukom. Ova metoda ne modificira veličinu datoteke, no stoga je ograničenog kapaciteta koji ovisi
+    o mogućnostima degradacije izvorne datoteke i entropiji iste.
+        \subsubsubsection{LSB supstitucija}
+        Jedna od najčešćih implementacija supstitucije je primjenom zamjene najmanje značajnog bita (LSB -- engl. \textit{Least Significant Bit}).
+        \cite{mostCommonLSB}
+
+        Primjerice, u 8 bitnim slikama, svaki piksel je predstavljen s 8 bita. Na slici ~\ref{img:lsbSupstitucija} je prikazan primjer takve
+        slike gdje se na krajnjem lijevom mjestu nalazi najznačajniji bit (MSB -- engl. \textit{Most Significant Bit}), a 
+        na krajnje desnom mjestu najmanje značajan bit (LSB). Promjenom MSB značajno mijenjamo izvornu sliku, no promjenom
+        LSB ostvarujemo teško primjetnu razliku, dokle god je slika koju mijenjamo dobar kandidat za omotač (ima visoku
+        entropiju).
+        \begin{figure}[h]
+            \caption{Prikaz rada LSB supstitucije}
+            \centering
+            \includegraphics[width=0.9\textwidth]{lsb.png}
+            \label{img:lsbSupstitucija}
+        \end{figure}
+
+        Pritom kako bi se osigurao integritet skrivene informacije se najčešće koriste kompresije bez gubitka podataka (engl. \textit{lossless compression}).
+        Glavna prednost ove metode je lakoća njene implementacije, no stoga je podložna ekstrakciji i napadima kompresijom ili izrezivanjem.
+
+        S obzirom na metodu supstitucije, LSB supstituciju dijelimo na sljedeće oblike:
+        \begin{itemize}
+            \item \textbf{Sekvencijalna}: U sekvencijalnoj supstituciji, kao što ime nalaže, skrivena informacija se pohranjuje
+            sekvencijalno, tj. u kontinuiranom slijedu podataka omotača. Ova tehnika je jednostavnija za detektiranje i dekodiranje s
+            obzirom da promjena u bitu prati sljedeću promjenu.
+            \item \textbf{Pseudo nasumična}: U pseudo nasumičnoj supstituciji se koristi pseudo nasumični generator brojeva (PSRNG -- engl. \textit{Pseudo Random Number Generator})
+            koji na nasumičan način određuje lokacije pohrane bitova skrivene informacije unutar omotača. Preduvjet ove metode jest dijeljena tajna
+            koja se koristi kao inicijalizator generatora. Ova tehnika je značajno teža za detekciju i statistički uniformnija.
+        \end{itemize}
+ 
