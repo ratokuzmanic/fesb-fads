@@ -1,0 +1,34 @@
+\section{MPEG kompresija}
+S obzirom da se u steganalizi ovog rada koristi MP4 format koji je baziran na MPEG kompresiji, u ovom poglavlju
+je dan osnovni pregled metode rada iste kao i objašnjenje važnosti svake vrste okvira po steganografiju.
+
+\subsection{Metodologija rada}
+MPEG je u osnovi kompresija s gubicima (engl. \textit{lossy compression}) koja iskorištava činjenicu da ljudski
+vizualni sustav ne osjeća značajne promjene u visoko frekvencijskom području. Temelji se na ulaznim kontinuiranim slikama
+u YCbCr ili YUV modelu boja koje segmentira, a potom putem DCT transformacije pretvara u frekvencijsko područje. Nakon toga
+vrši kvantizaciju dobivenih vrijednosti, sukladno njihovoj važnosti i preddefiniranim kvantizacijskim tablicama koje su obično
+različite za osvjetljenje i kromu.
+
+\subsection{Vrste okvira i njihov steganografski potencijal}
+MPEG kompresija koristi tri vrste okvira: I-, B- i P-okvire, kao što je prikazano na slici ~\ref{img:mpeg}.
+\begin{figure}[h]
+    \caption{Primjer sekvence MPEG okvira}
+    \centering
+    \includegraphics[width=0.58\textwidth]{mpeg.png}
+    \label{img:mpeg}
+\end{figure}
+Tri vrste okvira i njihov steganografski potencijal je dan kako slijedi:
+\begin{itemize}
+    \item \textbf{I-okvir}: Intra-kodirani okviri su okviri koji mogu biti rekonstruirani bez upotrebe drugih okvira,
+    odnosno samodostatni su. Svaki video započinje s jednim I-okvirom i periodično posjeduje nove I-okvire kako bi se
+    spriječila propagacija pogreške u prediktivnom kodiranju. Njihov nedostatak u kodiranju je činjenica da su velike veličine
+    s obzirom da je cijeli video kadar kodiran unutar okvira, no to im je steganografska prednost jer posjeduju najveći broj informacija,
+    odnosno najveću entropiju koja je pogodna za omotače.
+    \item \textbf{P-okvir}: Inter-kodirani P-okviri su okviri koji mogu biti rekonstruirani upotrebom prethodnih I- ili P-okvira,
+    što znači da su osjetljivi na greške u prijenosu i generalno malene veličine i entropije (kao posljedica vremenske i prostorne kvantizacije)
+    što ih čini lošim kandidatima za omotač.
+    \item \textbf{B-okvir}: Inter-kodirani B-okviri su okviri koji mogu biti rekonstruirani upotrebom prethodnih i budućih I- ili P-okvira. Iako
+    korištenje B-okvira poboljšava kvalitetu prediktivnog kodiranja i kvalitetu dekodiranog videa, istovremeno povećava vrijeme potrebno
+    za procesiranje. Steganografski su analogni P-okvirima.    
+\end{itemize}
+I-okviri su najpodobniji za provođenje steganografskih metoda supstitucije.
