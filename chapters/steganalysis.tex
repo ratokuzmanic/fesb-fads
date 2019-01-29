@@ -1,0 +1,41 @@
+\section{Steganaliza}
+Steganaliza je znanost otkrivanja steganografski skrivenih informacija, analogno kriptoanalizi u kriptografiji.
+U pravilu se provodi aktivna ili pasivna steganaliza, gdje u aktivnoj analizi analitičar može manipulirati podacima,
+a u pasivnoj ih isključivo analizirati. 
+
+\subsection{Tipovi napada}
+S obzirom na uvjete provođenja analize s ciljem otkrivanja steganografije, koji se još zove i \textit{napadom},
+sljedeći tipovi napada su definirani: \cite{steganalysis}
+\begin{itemize}
+    \item \textbf{Samo stego napad}: Analitičaru su poznati samo steganografski modificirani podaci, no analitičar ne zna
+    jesu li isti modificirani ili izvorni podaci.
+    \item \textbf{Poznat omotač napad}: Analitičaru su poznati steganografski modificirani podaci i izvorni omotač koji je korišten
+    za dobijanje steganografski modificiranih podataka.
+    \item \textbf{Poznata skrivena informacija napad}: Analitičaru su poznati steganografski modificirani podaci, izvorni omotač koji 
+    je korišten za dobijanje steganografski modificiranih podataka i skrivena informacija.
+    \item \textbf{Izabrani stego napad}: Analitičaru su poznati alati i metodologije koje su korištene pri izradi steganografski modificiranih
+    podataka.
+    \item \textbf{Izabrana skrivena informacija napad}: Analitičaru može generirati proizvoljne steganografski modificirane podatke iz izabranog
+    omotača i skrivene informacije.
+\end{itemize}
+
+\subsection{Metode napada}
+Metode napada razlikujemo temeljem fundamentalnih pristupa koji isti zauzimaju u provođenju napada.
+    \subsubsection{Vizualni napad}
+    Vizualni napad je primjer najjednostavnijeg napada na steganografski sustav. Analitičar golim okom pokušava uočiti
+    razlike između omotača i steganografski modificiranih podataka, a ukoliko iste ne uvidi ili ukoliko mu izvorni omotač nije poznat,
+    tj. ako je riječ o \textit{samo stego napadu} tada analitičar analizira ravnine slike (engl. \textit{bit plane slicing}), počevši s
+    ravninom najmanje značajnog bita.
+    \begin{figure}[h]
+        \caption{Primjer vizualnog napada}
+        \centering
+        \includegraphics[width=0.74\textwidth]{visual-attack}
+        \label{img:visualAttack}
+    \end{figure}
+    \subsubsection{Statistički napad}
+    Statističkim napadom se ispituju matematička svojstva podataka i temeljem njihovih analiza saznati postoji li skrivena
+    informacija ili ne. Statistički napadi su u pravilu efektivniji od vizualnih napada i najbolji pristup u \textit{samo stego napadu}.
+    
+    Jedan od najpoznatijih statističkih napada je Chi-square napad. \cite{chisquare} Chi-square napad je mjera sličnosti očekivanih podataka
+    i promatranih podataka. U stegoanalizi, ovaj napad pruža uvid u vjerojatnost postajanja skrivene informacije. Napad se može uspješno provesti
+    čak i bez poznavanja omotača, no ne može razlučiti veličinu skrivene informacije.
