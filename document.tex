@@ -12,6 +12,10 @@
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage[nottoc]{tocbibind}
+\usepackage{xcolor}
+
+\lstset{breaklines=true} 
+\lstset{backgroundcolor=\color{lightgray}}
 
 \graphicspath{ {images/} }
 \DeclareGraphicsExtensions{.jpg}
@@ -50,6 +54,7 @@
     \input{chapters/steganography.tex} \newpage
     \input{chapters/mpeg.tex} \newpage
     \input{chapters/steganalysis.tex} \newpage
+    \input{chapters/experiement.tex} \newpage
 
     \listoffigures
 
@@ -85,5 +90,25 @@
         Westfeld; Andreas, Pfitzmann; Andreas (1999)
         \textit{Attacks on Steganographic Systems Breaking the Steganographic Utilities EzStego, Jsteg, Steganos, and S-Tools—and Some Lessons Learned},
         Lecture Notes in Computer Science
+
+        \bibitem{ffmpeg}
+        FFmpeg
+        \textit{A complete, cross-platform solution to record, convert and stream audio and video}, s interneta:
+        \texttt{https://www.ffmpeg.org}, zadnji pristup: 30.1.2019.
+
+        \bibitem{obs}
+        OBS
+        \textit{Open Broadcaster Software}, s interneta:
+        \texttt{https://obsproject.com}, zadnji pristup: 30.1.2019.
+
+        \bibitem{incoherency}
+        Stanely; James
+        \textit{Incoherency: Image Steganography}, s interneta:
+        \texttt{https://incoherency.co.uk/image-steganography}, zadnji pristup: 30.1.2019.
+
+        \bibitem{ent}
+        Walker; John
+        \textit{ENT}, s interneta:
+        \texttt{http://www.fourmilab.ch/random}, zadnji pristup: 30.1.2019.
     \end{thebibliography}
 \end{document}

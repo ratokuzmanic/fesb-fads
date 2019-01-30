@@ -1,0 +1,32 @@
+\section{Eksperiment}
+U ovom poglavlju je predstavljena metodologija i rezultati provedenog eksperimenta.
+
+\subsection{Korišteni materijali}
+U svrhe provođenja steganalize s ciljem detekcije steganografskih elemenata unutar video sadržaja OTT platforme,
+odabrani su sljedeći materijali:
+\begin{itemize}
+    \item HBO GO kao primjer OTT platforme
+    \item t@gged serija, s konkretno uzetom prvom epizodom prve sezone (S1E1)
+    \item Referentna verzija serije, tj. omotača, dobivena s besplatne platforme Go90\footnote{Go90 platforma nije dostupna od 31.7.2018.}
+\end{itemize}
+
+\subsection{Normalizacija materijala}
+Videomaterijali prikupljeni s HBO GO platforme su dobiveni snimanjem video izlaza na kojem se reproducirala spomenuta
+serija. Originalno, presnimavanje se vršilo putem OBS Studio softvera, s izlaznim formatom .mp4, 4500 b/s video brzinom i
+44100Hz audio brzinom pri 60 slika u sekundi (FPS -- engl. \textit{Frames per Second}). 
+
+Kako bi se rezultati normalizirali i prilagodili referentnoj verziji, ispitana su ista svojstva referentnog videa i 
+korištenjem FFmpeg alata je videomaterijali prikupljen s HBO GO platforme normaliziran na referentnu vrijednost od 23.98 slika
+u sekundi.
+\begin{lstlisting}
+./ffmpeg -y -r 23.98 -i tagged_hbo-go.mp4 tagged_hbo-go_normalized.mp4
+\end{lstlisting}
+
+\subsection{Korišteni alati}
+U procesu provođenja eksperimenta su korišteni sljedeći alati:
+\begin{itemize}
+    \item FFmpeg, za komandno upravljanje (CLI -- engl.\textit{Command Line Interface}) video materijalima \cite{ffmpeg}
+    \item OBS Studio, za izvorno presnimavanje materijala \cite{obs}
+    \item Incoherency, za razdvajanje ploha slike \cite{incoherency}
+    \item ENT, za statističku analizu \cite{ent}
+\end{itemize}
