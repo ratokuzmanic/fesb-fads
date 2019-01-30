@@ -120,3 +120,14 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
         \caption{Usporedba statističkih parametara I-okvira referentnog i promatranog videa, respektivno}
         \label{img:diffStats}
     \end{figure}
+
+    Iako nismo pronašli tragove steganografske manipulacije, uočene su razlike u kadriranju unutar referentnog i sumnjivog video materijala. Primjerice,
+    unutar HBO GO verzije, uopće ne postoji okvir prikazan na slici ~\ref{img:missingFrame}, koji je izvučen iz Go90 verzije videa. Određene scene imaju ranije, a druge kasnije 
+    prijelaze ovisno o verziji, stoga je moguće da i montažom samog sadržaja se utječe na profiliranje integriteta izvora.
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{diff/hidden.png}
+        \caption{Okvir koji je prisutan u Go90 verziji, no ne i HBO GO verziji}
+        \label{img:missingFrame}
+    \end{figure}
+
