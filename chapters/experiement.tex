@@ -33,7 +33,7 @@ U procesu provođenja eksperimenta su korišteni sljedeći alati:
 
 \subsection{Analiza}
 Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u ovom odlomku.
-    \subsubsection{Vizualni napad}
+    \subsubsection{Vizualni \textit{samo stego} napad}
     Kako bi se proveo \textit{samo stego napad} na sumnjivi videomaterijal, prvotno je korištenjem FFmpeg alata video izrezan
     u manji segment, a potom su izolirani I-okvir, od kojih je jedan uzet za vizualni napad:
     \begin{lstlisting}
@@ -42,25 +42,25 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
     \end{lstlisting}
     Za provođenje vizalnog napada je odabran sljedeći I-okvir:
     \begin{figure}[h]
-        \caption{Odabrani I-okvir sumnjivog videomaterijala}
         \centering
         \includegraphics[width=0.8\textwidth]{visual/frame.png}
+        \caption{Odabrani I-okvir za vizualni napad na sumnjivi videomaterijal}
         \label{img:visualAttackFrame}
     \end{figure}
 
     Samom vizualnom inspekcijom nisu pronađeni dokazi steganografskih manipulacija, pa su stoga analizirane plohe slike
     korištenjem Incoherency alata. Rezultati razdvajanja ploha, s pretpostavkom korištenja od jednog do šest bitova za skrivanje
     informacije su dani slikom .%TODO: ADD VISUAL PLANES REF
-    \input{large-figures/visualPlanes.tex}
+    %\input{large-figures/visualPlanes.tex}
 
     Ponovno, analizom ploha slika se ne uviđaju elementi manipulacije ili skrivanja informacija.
 
-    \subsubsection{Statistički napad}
+    \subsubsection{Statistički \textit{samo stego} napad}
     Za provođenje statističkog napada odabran je sljedeći I-okvir iz raspona okvira dobivenih u koraku vizualnog napda:
     \begin{figure}[h]
-        \caption{Odabrani I-okvir sumnjivog videomaterijala}
         \centering
         \includegraphics[width=0.8\textwidth]{statistics/frame.png}
+        \caption{Odabrani I-okvir za statistički napad na sumnjivi videomaterijal}
         \label{img:statsAttackFrame}
     \end{figure}
 
@@ -69,12 +69,44 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
     što indicira potencijalno postojanje steganografski skrivenih informacija. Vrijednosti drugih testova nasumičnosti, poput aritmetičkog medijana
     ili izračuna vrijednosti broja Pi Monte Carlo algoritmom također ukazuju na postojanje nasumičnosti unutar podataka. \cite{ent}
     \begin{figure}[h]
-        \caption{Statistički parametri I-okvira sumnjivog videomaterijala}
         \centering
         \includegraphics[width=0.8\textwidth]{statistics/results.png}
+        \caption{Statistički parametri I-okvira sumnjivog videomaterijala}
         \label{img:statsAttackResults}
     \end{figure}
 
     Iako provođenjem \textit{samo stego napada} dobivamo opravdanu sumnju u prisutnost steganografski skrivenih informacija, bez poznavanja
     dodatnih informacija ne možemo donijeti decizivnu odluku. Stoga ćemo ovaj napad proširiti u \textit{poznat omotač napad} korištenjem referentnog
     video materijala.
+
+    \subsubsection{Diferencijalni \textit{poznat omotač} napad}
+    Za početak, potrebno je izolirati I-okvire referentnog videa u istom vremenskom segmentu kao u promatranom, sumnjivom videu. Korištenjem FFmpeg alata
+    pokrećemo sljedeće naredbe:
+    \begin{lstlisting}
+./ffmpeg -i tagged_go90.mp4 -ss 00:03:46.0 -t 00:00:10.0 -async 1 tagged_go90_short.mp4
+./ffmpeg -i tagged_go90_short.mp4 -vf "select=eq(pict_type\,I)" -vsync vfr go90/frame%04d.png -hide_banner
+    \end{lstlisting}
+
+    Diferencijalnoj analizi referentnog i sumnjivog, tj. promatranog, video materijala pristupamo s perspektive vizalnog napada. Usporedimo
+    li na slici ~\ref{img:diffIFrame} identičine I-okvire oba videa, nećemo uočiti vizualnu razliku, ako zanemarimo činjenicu da HBO koristi 
+    vodeni žig i prijevode.
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.45\textwidth]{diff/go90.png}
+        \includegraphics[width=0.45\textwidth]{diff/hbo.png}
+        \caption{Usporedba I-okvira referentnog i promatranog videa, respektivno}
+        \label{img:diffIFrame}
+    \end{figure}
+
+    Pogledamo li područja razlike dvaju okvira na slici ~\ref{img:diffImages}, uočavamo da slike nemaju signifikantnih razlika.
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.85\textwidth]{diff/minus.png}
+        \caption{Usporedba I-okvira referentnog i promatranog videa, respektivno}
+        \label{img:diffImages}
+    \end{figure}
+
+    Ako sada provedemo usporedbu ravnina slike na razini najmanje značajnog bita, također uviđamo strukturalne sličnosti, kao što 
+    je prikazano slikom %TODO: Add diff planes ref.
+    
+
