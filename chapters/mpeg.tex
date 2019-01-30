@@ -1,20 +1,20 @@
-\section{MPEG kompresija}
-S obzirom da se u steganalizi ovog rada koristi MP4 format koji je baziran na MPEG kompresiji, u ovom poglavlju
+\section{MPEG-4 kompresija}
+S obzirom da se u steganalizi ovog rada koristi MP4 format koji je baziran na MPEG-4 kompresiji, u ovom poglavlju
 je dan osnovni pregled metode rada iste kao i objašnjenje važnosti svake vrste okvira po steganografiju.
 
 \subsection{Metodologija rada}
-MPEG je u osnovi kompresija s gubicima (engl. \textit{lossy compression}) koja iskorištava činjenicu da ljudski
+MPEG-4 je u osnovi kompresija s gubicima (engl. \textit{lossy compression}) koja iskorištava činjenicu da ljudski
 vizualni sustav ne osjeća značajne promjene u visoko frekvencijskom području. Temelji se na ulaznim kontinuiranim slikama
-u YCbCr ili YUV modelu boja koje segmentira, a potom putem DCT transformacije pretvara u frekvencijsko područje. Nakon toga
+u YCbCr modelu boja koje segmentira, a potom putem DCT transformacije pretvara u frekvencijsko područje. Nakon toga
 vrši kvantizaciju dobivenih vrijednosti, sukladno njihovoj važnosti i preddefiniranim kvantizacijskim tablicama koje su obično
 različite za osvjetljenje i kromu.
 
 \subsection{Vrste okvira i njihov steganografski potencijal}
-MPEG kompresija koristi tri vrste okvira: I-, B- i P-okvire, kao što je prikazano na slici ~\ref{img:mpeg}.
+MPEG-4 kompresija koristi tri vrste okvira: I-, B- i P-okvire, kao što je prikazano na slici ~\ref{img:mpeg}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.58\textwidth]{mpeg.png}
-    \caption{Primjer sekvence MPEG okvira}
+    \caption{Primjer sekvence MPEG-4 okvira}
     \label{img:mpeg}
 \end{figure}
 Tri vrste okvira i njihov steganografski potencijal je dan kako slijedi:
