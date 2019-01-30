@@ -30,3 +30,51 @@ U procesu provođenja eksperimenta su korišteni sljedeći alati:
     \item Incoherency, za razdvajanje ploha slike \cite{incoherency}
     \item ENT, za statističku analizu \cite{ent}
 \end{itemize}
+
+\subsection{Analiza}
+Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u ovom odlomku.
+    \subsubsection{Vizualni napad}
+    Kako bi se proveo \textit{samo stego napad} na sumnjivi videomaterijal, prvotno je korištenjem FFmpeg alata video izrezan
+    u manji segment, a potom su izolirani I-okvir, od kojih je jedan uzet za vizualni napad:
+    \begin{lstlisting}
+./ffmpeg -i tagged_hbo-go_normalized.mp4 -ss 00:03:46.0 -t 00:00:10.0 -async 1 tagged_hbo-go_normalized_short.mp4
+./ffmpeg -i tagged_hbo-go_normalized_short.mp4 -vf "select=eq(pict_type\,I)" -vsync vfr hbo-go/frame%04d.png -hide_banner
+    \end{lstlisting}
+    Za provođenje vizalnog napada je odabran sljedeći I-okvir:
+    \begin{figure}[h]
+        \caption{Odabrani I-okvir sumnjivog videomaterijala}
+        \centering
+        \includegraphics[width=0.8\textwidth]{visual/frame.png}
+        \label{img:visualAttackFrame}
+    \end{figure}
+
+    Samom vizualnom inspekcijom nisu pronađeni dokazi steganografskih manipulacija, pa su stoga analizirane plohe slike
+    korištenjem Incoherency alata. Rezultati razdvajanja ploha, s pretpostavkom korištenja od jednog do šest bitova za skrivanje
+    informacije su dani slikom .%TODO: ADD VISUAL PLANES REF
+    \input{large-figures/visualPlanes.tex}
+
+    Ponovno, analizom ploha slika se ne uviđaju elementi manipulacije ili skrivanja informacija.
+
+    \subsubsection{Statistički napad}
+    Za provođenje statističkog napada odabran je sljedeći I-okvir iz raspona okvira dobivenih u koraku vizualnog napda:
+    \begin{figure}[h]
+        \caption{Odabrani I-okvir sumnjivog videomaterijala}
+        \centering
+        \includegraphics[width=0.8\textwidth]{statistics/frame.png}
+        \label{img:statsAttackFrame}
+    \end{figure}
+
+    Korištenjem ENT alata dobivene su vrijednosti prikazane na slici ~\ref{img:statsAttackResults}. Vrijednost entropije je visoka,
+    kako bismo i očekivali od I-okvira, no usprkos visokoj entropiji chi-square test pokazuje da naši podaci skoro sigurno nisu nasumični,
+    što indicira potencijalno postojanje steganografski skrivenih informacija. Vrijednosti drugih testova nasumičnosti, poput aritmetičkog medijana
+    ili izračuna vrijednosti broja Pi Monte Carlo algoritmom također ukazuju na postojanje nasumičnosti unutar podataka. \cite{ent}
+    \begin{figure}[h]
+        \caption{Statistički parametri I-okvira sumnjivog videomaterijala}
+        \centering
+        \includegraphics[width=0.8\textwidth]{statistics/results.png}
+        \label{img:statsAttackResults}
+    \end{figure}
+
+    Iako provođenjem \textit{samo stego napada} dobivamo opravdanu sumnju u prisutnost steganografski skrivenih informacija, bez poznavanja
+    dodatnih informacija ne možemo donijeti decizivnu odluku. Stoga ćemo ovaj napad proširiti u \textit{poznat omotač napad} korištenjem referentnog
+    video materijala.
