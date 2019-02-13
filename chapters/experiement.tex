@@ -12,11 +12,11 @@ odabrani su sljedeći materijali:
 
 \subsection{Normalizacija materijala}
 Videomaterijali prikupljeni s HBO GO platforme su dobiveni snimanjem video izlaza na kojem se reproducirala spomenuta
-serija. Originalno, presnimavanje se vršilo putem OBS Studio softvera, s izlaznim formatom .mp4, 4500 b/s video brzinom i
+serija. Originalno, presnimavanje se vršilo putem OBS Studio softvera, s izlaznim formatom MP4 (MPEG-4 kompresija), 4500 b/s video brzinom i
 44100Hz audio brzinom pri 60 slika u sekundi (FPS -- engl. \textit{Frames per Second}). 
 
 Kako bi se rezultati normalizirali i prilagodili referentnoj verziji, ispitana su ista svojstva referentnog videa i 
-korištenjem FFmpeg alata je videomaterijali prikupljen s HBO GO platforme normaliziran na referentnu vrijednost od 23.98 slika
+korištenjem FFmpeg alata su videomaterijali prikupljen s HBO GO platforme normalizirani na referentnu vrijednost od 23.98 slika
 u sekundi.
 \begin{lstlisting}
 ./ffmpeg -y -r 23.98 -i tagged_hbo-go.mp4 tagged_hbo-go_normalized.mp4
@@ -41,7 +41,7 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
 ./ffmpeg -i tagged_hbo-go_normalized_short.mp4 -vf "select=eq(pict_type\,I)" -vsync vfr hbo-go/frame%04d.png -hide_banner
     \end{lstlisting}
     Za provođenje vizalnog napada je odabran sljedeći I-okvir:
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\textwidth]{visual/frame.png}
         \caption{Odabrani I-okvir za vizualni napad na sumnjivi videomaterijal}
@@ -57,7 +57,7 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
 
     \subsubsection{Statistički \textit{samo stego} napad}
     Za provođenje statističkog napada odabran je sljedeći I-okvir iz raspona okvira dobivenih u koraku vizualnog napda:
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\textwidth]{statistics/frame.png}
         \caption{Odabrani I-okvir za statistički napad na sumnjivi videomaterijal}
@@ -65,10 +65,10 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
     \end{figure}
 
     Korištenjem ENT alata dobivene su vrijednosti prikazane na slici ~\ref{img:statsAttackResults}. Vrijednost entropije je visoka,
-    kako bismo i očekivali od I-okvira, no usprkos visokoj entropiji chi-square test pokazuje da naši podaci skoro sigurno nisu nasumični,
+    kako bismo i očekivali od I-okvira, no usprkos visokoj entropiji Chi-square test pokazuje da naši podaci skoro sigurno nisu nasumični,
     što indicira potencijalno postojanje steganografski skrivenih informacija. Vrijednosti drugih testova nasumičnosti, poput aritmetičkog medijana
     ili izračuna vrijednosti broja Pi Monte Carlo algoritmom također ukazuju na postojanje nasumičnosti unutar podataka. \cite{ent}
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\textwidth]{statistics/results.png}
         \caption{Statistički parametri I-okvira sumnjivog videomaterijala}
@@ -90,7 +90,7 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
     Diferencijalnoj analizi referentnog i sumnjivog, tj. promatranog, video materijala pristupamo s perspektive vizalnog napada. Usporedimo
     li na slici ~\ref{img:diffIFrame} identičine I-okvire oba videa, nećemo uočiti vizualnu razliku, ako zanemarimo činjenicu da HBO koristi 
     vodeni žig i prijevode.
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.45\textwidth]{diff/go90.png}
         \includegraphics[width=0.45\textwidth]{diff/hbo.png}
@@ -99,7 +99,7 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
     \end{figure}
 
     Pogledamo li područja razlike dvaju okvira na slici ~\ref{img:diffImages}, uočavamo da slike nemaju signifikantnih razlika.
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.85\textwidth]{diff/minus.png}
         \caption{Usporedba I-okvira referentnog i promatranog videa, respektivno}
@@ -112,9 +112,9 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
     
     Najvažnija nam je pritom usporedba statističkih parametara obiju okvira, koji za razliku od statističkih parametara 
     \textit{samo stego napada} ukazuju na sličnost statističke strukture okvira. Iz toga slijedi da opažena nasumičnost ne mora
-    nužno biti pokazatelj steganografskih informacija, već potencijalno posljedica kodiranja. 
+    nužno biti pokazatelj steganografskih informacija, već potencijalno posljedica kodiranja i kompresije. 
 
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\textwidth]{diff/stats_go90.png}\\\medskip
         \includegraphics[width=0.8\textwidth]{statistics/results.png}
@@ -124,7 +124,7 @@ Sami eksperiment je proveden u nekoliko etapa analize koji su pobliže opisani u
 
     Iako nismo pronašli tragove steganografske manipulacije, uočene su razlike u kadriranju unutar referentnog i sumnjivog video materijala. Primjerice,
     unutar HBO GO verzije, uopće ne postoji okvir prikazan na slici ~\ref{img:missingFrame}, koji je izvučen iz Go90 verzije videa. Određene scene imaju ranije, a druge kasnije 
-    prijelaze ovisno o verziji, stoga je moguće da i montažom samog sadržaja se utječe na profiliranje integriteta izvora.
+    prijelaze ovisno o verziji, stoga je moguće da i montažom samog sadržaja se utječe na mogućnost profiliranja.
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\textwidth]{diff/hidden.png}
